@@ -1,0 +1,33 @@
+{
+  "name": "dhl-shipment-backend",
+  "version": "1.0.0",
+  "description": "DHL Smart Shipment Automation Platform - Backend API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "node database/seeds/seedDatabase.js",
+    "migrate": "node database/migrations/initDatabase.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6",
+    "sqlite": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.0",
+    "body-parser": "^1.20.2",
+    "multer": "^1.4.5-lts.1",
+    "pdfkit": "^0.13.0",
+    "excel4node": "^1.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
