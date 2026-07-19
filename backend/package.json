@@ -8,6 +8,7 @@
     "dev": "nodemon src/index.js",
     "seed": "node database/seeds/seedDatabase.js",
     "migrate": "node database/migrations/initDatabase.js",
+    "migrate:dhl": "node database/migrations/addDHLFields.js",
     "test": "jest"
   },
   "dependencies": {

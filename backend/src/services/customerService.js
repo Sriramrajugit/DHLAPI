@@ -3,9 +3,11 @@ const { generateUUID, formatDate } = require('../utils/helpers');
 
 const getCustomerByDealId = async (dealId) => {
   try {
+    const normalizedDealId = (dealId || '').trim();
     const customer = await db.get(
-      'SELECT * FROM customers WHERE deal_id = ?',
-      [dealId]
+      `SELECT * FROM customers
+       WHERE UPPER(REPLACE(deal_id, ' ', '')) = UPPER(REPLACE(?, ' ', ''))`,
+      [normalizedDealId]
     );
     return customer;
   } catch (error) {

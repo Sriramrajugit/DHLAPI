@@ -1,0 +1,301 @@
+{
+  "examples": [
+    {
+      "name": "Simple Shipment (Demo)",
+      "description": "Basic shipment creation with minimal required fields",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3001/api/shipments",
+        "headers": {
+          "Content-Type": "application/json",
+          "messageReferenceHeader": "MSG-2026-07-19-001",
+          "messageReferenceDateHeader": "2026-07-19T10:30:00Z",
+          "xVersionHeader": "3.3.1"
+        },
+        "queryParams": {
+          "shpStrictValidation": "false",
+          "validateDataOnly": "false"
+        },
+        "body": {
+          "deal_id": "DEAL-001",
+          "customer_id": "CUST-001",
+          "shipment_reference": "REF-2026-001",
+          "product_code": "P",
+          "content_type": "NON_DOC",
+          "validation_scores": [95],
+          "piece_count": 1
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "shipment_id": "SHP-12A4B5C6",
+          "awb_number": "891234",
+          "status": "CREATED",
+          "confidence_score": 95,
+          "created_date": "2026-07-19T10:30:00Z",
+          "label": {
+            "type": "application/pdf",
+            "data": "base64-encoded-pdf",
+            "format": "base64"
+          },
+          "details": {
+            "piece_count": 1,
+            "total_weight": 0,
+            "weight_uom": "KG",
+            "shipper": "N/A",
+            "receiver": "N/A",
+            "product": "P"
+          }
+        }
+      }
+    },
+    {
+      "name": "Full Shipment (Complete DHL API)",
+      "description": "Complete shipment with all DHL API parameters",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3001/api/shipments",
+        "headers": {
+          "Content-Type": "application/json",
+          "messageReferenceHeader": "MSG-2026-07-19-002",
+          "messageReferenceDateHeader": "2026-07-19T11:00:00Z",
+          "xVersionHeader": "3.3.1",
+          "3PVpluginNameHeader": "DHL-Plugin",
+          "3PVpluginVersionHeader": "1.0.0"
+        },
+        "queryParams": {
+          "shpStrictValidation": "true",
+          "validateDataOnly": "false"
+        },
+        "body": {
+          "deal_id": "DEAL-002",
+          "customer_id": "CUST-002",
+          "shipment_reference": "REF-2026-002",
+          "product_code": "E",
+          "content_type": "NON_DOC",
+          "validation_scores": [100, 98, 95],
+          
+          "shipper": {
+            "name": "DHL Export GmbH",
+            "address": {
+              "address_line1": "Flughafenstraße 52-56",
+              "city": "Bonn",
+              "postal_code": "53142",
+              "country_code": "DE"
+            },
+            "email": "shipping@dhl-export.de",
+            "phone": "+49 228 1234567"
+          },
+          
+          "receiver": {
+            "name": "Recipient Company France",
+            "address": {
+              "address_line1": "123 Rue de la Paix",
+              "city": "Paris",
+              "postal_code": "75001",
+              "country_code": "FR"
+            },
+            "email": "receive@company-fr.com",
+            "phone": "+33 1 23456789"
+          },
+          
+          "pieces": [
+            {
+              "piece_number": 1,
+              "weight": 2.5,
+              "weightUom": "KG",
+              "length": 30,
+              "width": 20,
+              "height": 15,
+              "unitOfMeasure": "CM",
+              "description": "Electronics - Laptop",
+              "sku": "SKU-12345"
+            },
+            {
+              "piece_number": 2,
+              "weight": 1.2,
+              "weightUom": "KG",
+              "length": 20,
+              "width": 15,
+              "height": 10,
+              "unitOfMeasure": "CM",
+              "description": "Accessories - Mouse",
+              "sku": "SKU-67890"
+            }
+          ],
+          
+          "special_services": [
+            {
+              "service_code": "SIG",
+              "value": 0
+            },
+            {
+              "service_code": "INS",
+              "value": 500
+            }
+          ],
+          
+          "invoice": {
+            "invoice_number": "INV-2026-001",
+            "invoice_date": "2026-07-19",
+            "currency_code": "EUR",
+            "terms_of_trade": "CIF",
+            "amount": 1500.00,
+            "payment_method": "CREDIT_CARD"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Message-Reference": "MSG-2026-07-19-002",
+          "Message-Reference-Date": "2026-07-19T11:00:00Z",
+          "API-Version": "3.3.1",
+          "Location": "/api/shipments/SHP-87D9E1F2"
+        },
+        "body": {
+          "shipment_id": "SHP-87D9E1F2",
+          "awb_number": "891567",
+          "status": "CREATED",
+          "confidence_score": 97.67,
+          "created_date": "2026-07-19T11:00:00Z",
+          "label": {
+            "type": "application/pdf",
+            "data": "base64-encoded-pdf-with-label",
+            "format": "base64"
+          },
+          "details": {
+            "piece_count": 2,
+            "total_weight": 3.7,
+            "weight_uom": "KG",
+            "shipper": "DHL Export GmbH",
+            "receiver": "Recipient Company France",
+            "product": "E"
+          }
+        }
+      }
+    },
+    {
+      "name": "Validation Only (Dry Run)",
+      "description": "Validate shipment data without creating it",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3001/api/shipments?validateDataOnly=true",
+        "headers": {
+          "Content-Type": "application/json",
+          "xVersionHeader": "3.3.1"
+        },
+        "body": {
+          "deal_id": "DEAL-003",
+          "customer_id": "CUST-003",
+          "shipper": {
+            "name": "Test Shipper",
+            "address": {
+              "address_line1": "Test Street 1",
+              "city": "TestCity",
+              "postal_code": "12345",
+              "country_code": "DE"
+            }
+          },
+          "receiver": {
+            "name": "Test Receiver",
+            "address": {
+              "address_line1": "Test Street 2",
+              "city": "TestCity2",
+              "postal_code": "54321",
+              "country_code": "FR"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "validation_result": "OK",
+          "message": "Data validation successful. Ready to create shipment.",
+          "data": {
+            "deal_id": "DEAL-003",
+            "customer_id": "CUST-003"
+          }
+        }
+      }
+    },
+    {
+      "name": "Error - Missing Required Fields",
+      "description": "Shipment creation with missing required fields",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3001/api/shipments",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "shipment_reference": "REF-ERROR-001",
+          "weight": 2.5
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "Missing required field: deal_id"
+        }
+      }
+    },
+    {
+      "name": "Error - Invalid Product Code",
+      "description": "Shipment with invalid DHL product code",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3001/api/shipments",
+        "headers": {
+          "Content-Type": "application/json",
+          "xVersionHeader": "3.3.1"
+        },
+        "body": {
+          "deal_id": "DEAL-004",
+          "customer_id": "CUST-004",
+          "product_code": "INVALID",
+          "shipper": {
+            "name": "Shipper",
+            "address": {
+              "address_line1": "Street",
+              "city": "City",
+              "postal_code": "12345",
+              "country_code": "DE"
+            }
+          },
+          "receiver": {
+            "name": "Receiver",
+            "address": {
+              "address_line1": "Street",
+              "city": "City",
+              "postal_code": "12345",
+              "country_code": "FR"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 422,
+        "body": {
+          "error": "Validation failed: Invalid product_code. Must be one of: P, E, N, X, Y"
+        }
+      }
+    }
+  ],
+  "dhl_product_codes": {
+    "P": "DHL Express Worldwide (Default)",
+    "E": "DHL Express 9:00",
+    "N": "DHL Express 10:30",
+    "X": "DHL Express 10:30 Saturday",
+    "Y": "DHL Express 12:00"
+  },
+  "testing_notes": {
+    "demo_deal_id": "DEAL-001",
+    "demo_customer_id": "CUST-001",
+    "base_url": "http://localhost:3001/api",
+    "timeout": "5000ms",
+    "strict_validation": "Requires shipper, receiver, and pieces information"
+  }
+}

@@ -20,3 +20,30 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* AWB Link Styling */
+.awb-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 0;
+  font-weight: 600;
+  font-size: inherit;
+  transition: all 0.2s ease;
+}
+
+.awb-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.awb-link:active {
+  transform: scale(0.98);
+}
+
+.awb-link:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}

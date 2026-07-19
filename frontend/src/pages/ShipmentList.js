@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShipmentAPI } from '../services/api';
 import '../pages/ShipmentList.css';
 
 function ShipmentList() {
+  const navigate = useNavigate();
   const [shipments, setShipments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,7 +67,15 @@ function ShipmentList() {
               <tbody>
                 {shipments.map((shipment) => (
                   <tr key={shipment.id}>
-                    <td><strong>{shipment.awb_number}</strong></td>
+                    <td>
+                      <button
+                        className="awb-link"
+                        onClick={() => navigate(`/shipments/${shipment.id}`)}
+                        title="Click to view details"
+                      >
+                        {shipment.awb_number}
+                      </button>
+                    </td>
                     <td>{shipment.deal_id}</td>
                     <td>
                       <span 

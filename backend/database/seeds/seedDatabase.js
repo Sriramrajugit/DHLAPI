@@ -59,11 +59,11 @@ const startSeeding = async () => {
         customer_name: 'ABC Technologies Ltd',
         address_line1: '123 Tech Street',
         address_line2: 'Suite 100',
-        city: 'Berlin',
-        postal_code: '10115',
-        country_code: 'DE',
+        city: 'Petaling Jaya',
+        postal_code: '40150',
+        country_code: 'MY',
         contact_email: 'contact@abctech.com',
-        contact_phone: '+49-30-123-4567'
+        contact_phone: '+6013911109'
       },
       {
         deal_id: 'DEAL-002',
@@ -81,20 +81,20 @@ const startSeeding = async () => {
         contract_id: 'CONTRACT-003',
         customer_name: 'European Distributors',
         address_line1: '789 Commerce Road',
-        city: 'Amsterdam',
-        postal_code: '1012 NX',
-        country_code: 'NL',
+        city: 'Chennai',
+        postal_code: '600091',
+        country_code: 'IN',
         contact_email: 'logistics@eurdist.eu',
-        contact_phone: '+31-20-123-4567'
+        contact_phone: '+919840811178'
       },
       {
         deal_id: 'DEAL-004',
         contract_id: 'CONTRACT-004',
         customer_name: 'Tech Solutions France',
         address_line1: '321 Enterprise Blvd',
-        city: 'Paris',
+        city: 'Anson, Tanjong Pagar',
         postal_code: '75008',
-        country_code: 'FR',
+        country_code: 'SG',
         contact_email: 'contact@techfr.com',
         contact_phone: '+33-1-42-68-53-00'
       },
@@ -114,14 +114,22 @@ const startSeeding = async () => {
     console.log('Seeding customers...');
     for (const customer of customers) {
       try {
-        await database.run(
-          `INSERT INTO customers 
-           (id, deal_id, contract_id, customer_name, address_line1, address_line2, 
-            city, postal_code, country_code, contact_email, contact_phone, created_date, updated_date)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        const now = new Date().toISOString();
+
+        const updateResult = await database.run(
+          `UPDATE customers
+           SET contract_id = ?,
+               customer_name = ?,
+               address_line1 = ?,
+               address_line2 = ?,
+               city = ?,
+               postal_code = ?,
+               country_code = ?,
+               contact_email = ?,
+               contact_phone = ?,
+               updated_date = ?
+           WHERE deal_id = ?`,
           [
-            uuidv4(),
-            customer.deal_id,
             customer.contract_id,
             customer.customer_name,
             customer.address_line1,
@@ -131,11 +139,37 @@ const startSeeding = async () => {
             customer.country_code,
             customer.contact_email || null,
             customer.contact_phone || null,
-            new Date().toISOString(),
-            new Date().toISOString()
+            now,
+            customer.deal_id
           ]
         );
-        console.log(`✓ Seeded customer: ${customer.customer_name}`);
+
+        if (updateResult.changes > 0) {
+          console.log(`↻ Updated customer: ${customer.customer_name}`);
+        } else {
+          await database.run(
+            `INSERT INTO customers 
+             (id, deal_id, contract_id, customer_name, address_line1, address_line2, 
+              city, postal_code, country_code, contact_email, contact_phone, created_date, updated_date)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              uuidv4(),
+              customer.deal_id,
+              customer.contract_id,
+              customer.customer_name,
+              customer.address_line1,
+              customer.address_line2 || null,
+              customer.city,
+              customer.postal_code,
+              customer.country_code,
+              customer.contact_email || null,
+              customer.contact_phone || null,
+              now,
+              now
+            ]
+          );
+          console.log(`✓ Seeded customer: ${customer.customer_name}`);
+        }
       } catch (err) {
         if (err.message.includes('UNIQUE')) {
           console.log(`⊘ Customer ${customer.customer_name} already exists`);
