@@ -1,52 +1,9 @@
-const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const database = require('../../src/utils/database');
 const { v4: uuidv4 } = require('uuid');
 
-const DB_PATH = path.join(__dirname, '../dhl_shipment.db');
-
-let db = null;
-
-const database = {
-  run: (sql, params = []) => {
-    return new Promise((resolve, reject) => {
-      db.run(sql, params, function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: this.lastID, changes: this.changes });
-        }
-      });
-    });
-  },
-  close: () => {
-    return new Promise((resolve, reject) => {
-      if (db) {
-        db.close((err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      } else {
-        resolve();
-      }
-    });
-  }
-};
-
 const seedDatabase = async () => {
-  return new Promise((resolve, reject) => {
-    db = new sqlite3.Database(DB_PATH, async (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        try {
-          await startSeeding();
-          resolve();
-        } catch (error) {
-          reject(error);
-        }
-      }
-    });
-  });
+  await database.initialize();
+  await startSeeding();
 };
 
 const startSeeding = async () => {

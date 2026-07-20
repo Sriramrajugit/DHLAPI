@@ -1,6 +1,6 @@
 # DHL Smart Shipment Automation Platform
 
-Complete project scaffolding with local mock APIs, SQLite database, and React frontend.
+Complete project scaffolding with local mock APIs, JSON file storage for the demo backend, and React frontend.
 
 ## Project Structure
 
@@ -32,7 +32,7 @@ DHL_proposal/
 │   ├── migrations/              # Database setup scripts
 │   ├── seeds/                   # Sample data
 │   ├── SCHEMA.md                # Database schema documentation
-│   └── dhl_shipment.db          # SQLite database (auto-created)
+│   └── dhl_shipment.json        # Demo data store (auto-created)
 └── docs/                        # Documentation
 ```
 
@@ -111,7 +111,7 @@ npm start
 
 ### Backend
 ✅ Express.js REST API
-✅ SQLite database with 6 tables
+✅ JSON file storage with 6 logical collections
 ✅ Mock DHL APIs (no external integration needed)
 ✅ Address validation with country-specific rules
 ✅ Shipment creation with confidence scoring
@@ -129,10 +129,10 @@ npm start
 ✅ API client service layer
 
 ### Database
-✅ SQLite (local, zero-config)
-✅ 6 pre-designed tables
+✅ JSON file storage (local, zero-config)
+✅ 6 pre-defined logical collections
 ✅ Sample data (5 customers)
-✅ Auto-migrations on startup
+✅ Auto-initialization on startup
 ✅ Audit trail support
 
 ## Sample Workflow
@@ -175,7 +175,7 @@ npm start
 ```
 NODE_ENV=development
 PORT=3001
-DATABASE_PATH=./database/dhl_shipment.db
+DATABASE_PATH=./database/dhl_shipment.json
 LOG_LEVEL=info
 CORS_ORIGIN=http://localhost:3000
 SESSION_SECRET=your_secret_key_here
@@ -191,7 +191,7 @@ REACT_APP_API_TIMEOUT=30000
 
 **Backend won't start**
 - Ensure port 3001 is not in use
-- Delete old .db file and reseed
+- Delete the old `.json` data file and reseed
 
 **Frontend can't connect to API**
 - Check backend is running on port 3001
@@ -206,7 +206,7 @@ REACT_APP_API_TIMEOUT=30000
 | Layer | Technology |
 |-------|-----------|
 | Backend | Node.js + Express.js |
-| Database | SQLite3 |
+| Database | JSON file storage |
 | Frontend | React 18 |
 | API Client | Axios |
 | Routing | React Router v6 |

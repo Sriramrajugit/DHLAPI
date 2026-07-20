@@ -5,7 +5,7 @@
 ### What You'll Have
 ✅ Backend API on localhost:3001
 ✅ Frontend on localhost:3000
-✅ SQLite database with sample data
+✅ JSON file data store with sample data
 ✅ Mock DHL APIs (no account needed)
 
 ### Step 1: Terminal A (Backend)
@@ -108,7 +108,7 @@ curl -X POST http://localhost:3001/api/shipments \
 
 ## Database Info
 
-**Location:** `database/dhl_shipment.db`
+**Location:** `database/dhl_shipment.json`
 
 **Sample Customers Loaded:**
 - DEAL-001: ABC Technologies Ltd (Berlin, DE)
@@ -120,7 +120,7 @@ curl -X POST http://localhost:3001/api/shipments \
 **To Reset Database:**
 ```bash
 # Delete old database
-rm database/dhl_shipment.db
+rm database/dhl_shipment.json
 
 # Backend terminal: Reinitialize
 npm run migrate
@@ -180,11 +180,11 @@ Ready to add:
 │  │ └─ auditService      │   │
 │  └──────────────────────┘   │
 └──────────┬──────────────────┘
-           │ SQL
+           │ File I/O
            ▼
 ┌─────────────────────┐
-│  SQLite Database    │
-│  dhl_shipment.db    │
+│  JSON Data Store    │
+│  dhl_shipment.json  │
 │  ├─ customers       │
 │  ├─ shipments       │
 │  ├─ validation_*    │
@@ -197,7 +197,7 @@ Ready to add:
 
 ✅ **Backend** - Full REST API with services
 ✅ **Frontend** - React dashboard with all pages
-✅ **Database** - SQLite with schema & sample data
+✅ **Database** - JSON file storage with sample data
 ✅ **Mock APIs** - No external dependencies
 ✅ **Authentication** - Placeholder (use your integration)
 ✅ **Error Handling** - Comprehensive

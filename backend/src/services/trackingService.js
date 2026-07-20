@@ -1,6 +1,22 @@
 const db = require('../utils/database');
 const { generateUUID, formatDate } = require('../utils/helpers');
 
+const parseTrackingDetails = (details) => {
+  if (!details) {
+    return null;
+  }
+
+  if (typeof details !== 'string') {
+    return details;
+  }
+
+  try {
+    return JSON.parse(details);
+  } catch (error) {
+    return details;
+  }
+};
+
 // Mock tracking statuses progression
 const TRACKING_STATUSES = [
   'SHIPMENT_CREATED',
@@ -18,7 +34,7 @@ const addTrackingUpdate = async (awbNumber, status, location = '', details = '')
     await db.run(
       `INSERT INTO tracking (id, awb_number, status, location, timestamp, details)
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [id, awbNumber, status, location, now, details]
+      [id, awbNumber, status, location, now, JSON.stringify(details)]
     );
 
     return { id, awb_number: awbNumber, status, location, timestamp: now };
@@ -37,7 +53,7 @@ const getTrackingHistory = async (awbNumber) => {
 
     return history.map(h => ({
       ...h,
-      details: h.details ? JSON.parse(h.details) : null
+      details: parseTrackingDetails(h.details)
     }));
   } catch (error) {
     console.error('Error fetching tracking history:', error);
@@ -52,8 +68,8 @@ const getLatestTrackingStatus = async (awbNumber) => {
       [awbNumber]
     );
 
-    if (latest && latest.details) {
-      latest.details = JSON.parse(latest.details);
+    if (latest) {
+      latest.details = parseTrackingDetails(latest.details);
     }
 
     return latest;

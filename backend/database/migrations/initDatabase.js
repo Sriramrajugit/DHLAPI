@@ -5,7 +5,7 @@ const initDatabase = async () => {
     console.log('Initializing database...');
     await database.initialize();
     console.log('✓ Database initialized successfully');
-    console.log(`Database location: ${process.env.DATABASE_PATH || './database/dhl_shipment.db'}`);
+    console.log(`Database location: ${process.env.DATABASE_PATH || './database/dhl_shipment.json'}`);
     
     // List tables
     const tables = await database.all(

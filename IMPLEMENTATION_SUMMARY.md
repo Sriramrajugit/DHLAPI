@@ -24,11 +24,11 @@ DHL_proposal/
 │   ├── package.json         → Dependencies configured
 │   └── .env.example         → Configuration template
 │
-├── ✅ Database (SQLite)
+├── ✅ Database (JSON demo store)
 │   ├── migrations/          → Database initialization script
 │   ├── seeds/               → Sample data script
 │   ├── SCHEMA.md            → Database design documentation
-│   └── dhl_shipment.db      → Auto-created on first run
+│   └── dhl_shipment.json    → Auto-created on first run
 │
 ├── ✅ Documentation
 │   ├── README.md            → Complete project guide
@@ -56,7 +56,7 @@ DHL_proposal/
 - ✅ `services/trackingService.js` - Tracking progression + simulation
 
 **Utilities Created:** 2 modules
-- ✅ `utils/database.js` - SQLite connection + migrations
+- ✅ `utils/database.js` - JSON file storage adapter
 - ✅ `utils/helpers.js` - UUID generation, AWB generation, validation helpers
 
 **Features:**
@@ -98,7 +98,7 @@ DHL_proposal/
 
 ## 💾 Database Design
 
-### SQLite Schema (6 Tables)
+### Demo Storage Model (6 Logical Collections)
 
 1. **customers** - Customer information from Excel/local DB
    - 12 fields (ID, deal_id, name, address, country, contact info)
@@ -132,7 +132,7 @@ DHL_proposal/
 ```
 NODE_ENV=development
 PORT=3001
-DATABASE_PATH=./database/dhl_shipment.db
+DATABASE_PATH=./database/dhl_shipment.json
 LOG_LEVEL=info
 CORS_ORIGIN=http://localhost:3000
 SESSION_SECRET=your_secret_key_here
@@ -152,7 +152,6 @@ REACT_APP_API_TIMEOUT=30000
 ```json
 {
   "express": "^4.18.2",
-  "sqlite3": "^5.1.6",
   "cors": "^2.8.5",
   "dotenv": "^16.3.1",
   "uuid": "^9.0.0",
@@ -226,7 +225,7 @@ npm start              # Start on port 3000
 
 ### ✅ Data Management
 - Customer CRUD operations
-- Deal ID lookup from SQLite
+- Deal ID lookup from local demo storage
 - No Mainframe dependency
 
 ### ✅ Validation Engine
@@ -268,7 +267,7 @@ npm start              # Start on port 3000
 
 1. User navigates to "Create Shipment"
 2. Enters Deal ID (e.g., DEAL-001)
-3. System queries SQLite → retrieves ABC Technologies Ltd
+3. System reads local demo storage → retrieves ABC Technologies Ltd
 4. Address validation against postal code rules → 100% score
 5. User enters weight, piece count
 6. System generates:
@@ -300,14 +299,14 @@ npm start              # Start on port 3000
 ## 🎯 Ready for Next Steps
 
 ### Phase 2 Ready (Excel Import)
-- Database schema prepared
+- Data model prepared
 - Import logic can be added to `backend/src/services/`
 - multer already configured for file uploads
 
 ### Phase 3 Ready (Advanced Risk Scoring)
 - Validation infrastructure in place
 - Scoring algorithm ready to enhance
-- Risk rules table prepared in DB
+- Risk rules collection prepared in storage
 
 ### Phase 4 Ready (PDF Generation)
 - pdfkit dependency already included
@@ -323,13 +322,13 @@ npm start              # Start on port 3000
 ## ⚡ Performance Considerations
 
 ✅ **Lightweight:**
-- SQLite (no server overhead)
+- JSON file storage (no server overhead)
 - Express (minimal footprint)
 - React (client-side rendering)
 
 ✅ **Scalability Ready:**
 - Service-oriented architecture
-- Database optimized for reads
+- Persistence isolated behind the database utility
 - Pagination implemented
 - Audit trail partitioned by shipment
 
@@ -347,7 +346,7 @@ npm start              # Start on port 3000
 - No authentication enforced (placeholder ready)
 - CORS: localhost:3000 only
 - No rate limiting
-- SQLite (file-based, no network exposure)
+- JSON file storage (file-based, no network exposure)
 
 ✅ **Ready for Production:**
 - Integrate your existing auth system

@@ -1,0 +1,115 @@
+{
+  "customers": [
+    {
+      "id": "9d646dc9-975b-480d-8d7d-c7d8ece799da",
+      "deal_id": "DEAL-001",
+      "contract_id": "CONTRACT-001",
+      "customer_name": "ABC Technologies Ltd",
+      "address_line1": "123 Tech Street",
+      "address_line2": "Suite 100",
+      "city": "Petaling Jaya",
+      "postal_code": "40150",
+      "country_code": "MY",
+      "contact_email": "contact@abctech.com",
+      "contact_phone": "+6013911109",
+      "created_date": "2026-07-20T06:21:14.426Z",
+      "updated_date": "2026-07-20T06:21:14.426Z"
+    },
+    {
+      "id": "12385ee5-aa0e-4130-a8a0-8d778f030a12",
+      "deal_id": "DEAL-002",
+      "contract_id": "CONTRACT-002",
+      "customer_name": "Global Supplies Inc",
+      "address_line1": "456 Industrial Ave",
+      "address_line2": null,
+      "city": "London",
+      "postal_code": "SW1A 1AA",
+      "country_code": "GB",
+      "contact_email": "info@globalsupplies.com",
+      "contact_phone": "+44-20-7946-0958",
+      "created_date": "2026-07-20T06:21:14.431Z",
+      "updated_date": "2026-07-20T06:21:14.431Z"
+    },
+    {
+      "id": "9bda7664-4af2-422f-b7cb-bf3697d4819f",
+      "deal_id": "DEAL-003",
+      "contract_id": "CONTRACT-003",
+      "customer_name": "European Distributors",
+      "address_line1": "789 Commerce Road",
+      "address_line2": null,
+      "city": "Chennai",
+      "postal_code": "600091",
+      "country_code": "IN",
+      "contact_email": "logistics@eurdist.eu",
+      "contact_phone": "+919840811178",
+      "created_date": "2026-07-20T06:21:14.433Z",
+      "updated_date": "2026-07-20T06:21:14.433Z"
+    },
+    {
+      "id": "8a10389d-56be-4f01-8a04-d8dd3207f5df",
+      "deal_id": "DEAL-004",
+      "contract_id": "CONTRACT-004",
+      "customer_name": "Tech Solutions France",
+      "address_line1": "321 Enterprise Blvd",
+      "address_line2": null,
+      "city": "Anson, Tanjong Pagar",
+      "postal_code": "75008",
+      "country_code": "SG",
+      "contact_email": "contact@techfr.com",
+      "contact_phone": "+33-1-42-68-53-00",
+      "created_date": "2026-07-20T06:21:14.434Z",
+      "updated_date": "2026-07-20T06:21:14.434Z"
+    },
+    {
+      "id": "2d8ef4ac-704e-43ff-a3ec-8dffbd9ff92e",
+      "deal_id": "DEAL-005",
+      "contract_id": "CONTRACT-005",
+      "customer_name": "Iberian Trading Co",
+      "address_line1": "654 Commercial Plaza",
+      "address_line2": null,
+      "city": "Madrid",
+      "postal_code": "28001",
+      "country_code": "ES",
+      "contact_email": "sales@iberiantrading.es",
+      "contact_phone": "+34-91-123-4567",
+      "created_date": "2026-07-20T06:21:14.435Z",
+      "updated_date": "2026-07-20T06:21:14.435Z"
+    }
+  ],
+  "shipments": [
+    {
+      "id": "SHP-38EDC638",
+      "awb_number": "669776247037",
+      "deal_id": "DEAL-001",
+      "customer_id": "9d646dc9-975b-480d-8d7d-c7d8ece799da",
+      "shipment_reference": "test",
+      "weight": 2,
+      "dimensions": "{}",
+      "piece_count": 1,
+      "status": "CREATED",
+      "confidence_score": 100,
+      "created_date": "2026-07-20T06:24:29.776Z",
+      "shipper_name": "ABC Technologies Ltd",
+      "shipper_address": "{\"address_line1\":\"Level 25 & 26, Equatorial Plaza, Jalan Sultan Ismail\",\"city\":\"Kuala Lumpur\",\"postal_code\":\"50250\",\"country_code\":\"MY\"}",
+      "receiver_name": "ABC Technologies Ltd",
+      "receiver_address": "{\"address_line1\":\"123 Tech Street\",\"city\":\"Petaling Jaya\",\"postal_code\":\"40150\",\"country_code\":\"MY\"}",
+      "product_code": "P",
+      "content_type": "NON_DOC",
+      "special_services": "[]",
+      "invoice_data": "{}"
+    }
+  ],
+  "validation_results": [],
+  "tracking": [],
+  "audit_logs": [
+    {
+      "id": "3d5a19c9-b5eb-47f6-bbfa-24f1199585ba",
+      "shipment_id": "SHP-38EDC638",
+      "action": "SHIPMENT_CREATED",
+      "user_id": "SYSTEM",
+      "details": "{\"confidence_score\":100,\"deal_id\":\"DEAL-001\",\"product_code\":\"P\",\"total_pieces\":1,\"total_weight\":2}",
+      "timestamp": "2026-07-20T06:24:29.778Z"
+    }
+  ],
+  "validation_rules": []
+}
